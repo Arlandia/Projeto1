@@ -8,12 +8,16 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import br.com.senac.dominio.Aluno;
+import br.com.senac.dominio.Categoria;
 import br.com.senac.dominio.Cidade;
+import br.com.senac.dominio.Curso;
 import br.com.senac.dominio.Endereco;
 import br.com.senac.dominio.Estado;
 import br.com.senac.dominio.Usuario;
 import br.com.senac.repositorio.AlunoRepositorio;
+import br.com.senac.repositorio.CategoriaRepositorio;
 import br.com.senac.repositorio.CidadeRepositorio;
+import br.com.senac.repositorio.CursoRepositorio;
 import br.com.senac.repositorio.EnderecoRepositorio;
 import br.com.senac.repositorio.EstadoRepositorio;
 import br.com.senac.repositorio.UsuarioRepositorio;
@@ -24,7 +28,7 @@ public class init  implements ApplicationListener<ContextRefreshedEvent>{
     AlunoRepositorio alunoRepositorio;
     
     @Autowired
-    EstadoRepositorio estadoRepositorio;
+    EstadoRepositorio estadoRepositorio; 
     
     @Autowired
     CidadeRepositorio cidadeRepositorio;
@@ -34,6 +38,11 @@ public class init  implements ApplicationListener<ContextRefreshedEvent>{
     @Autowired
     UsuarioRepositorio usuarioRepositorio;
     
+    @Autowired
+    CategoriaRepositorio categoriaRepositorio;
+    
+    @Autowired
+    CursoRepositorio cursoRepositorio;
     
     
 	@Override
@@ -43,6 +52,23 @@ public class init  implements ApplicationListener<ContextRefreshedEvent>{
 		aluno1.setEmail("lanny.cardoso@hotmail.com");
 		
 		alunoRepositorio.save(aluno1);
+		
+		//criando categoria
+		
+		Categoria categoria1 = new Categoria(null,"java");
+		Categoria categoria2 = new Categoria(null,"Mobile");
+		
+		categoriaRepositorio.saveAll(Arrays.asList(categoria1,categoria2));
+		
+		//Criando curso
+		
+		Curso curso1 = new Curso(null,"Java", "Java para iniciante", 200.00);
+		Curso curso2 = new Curso(null,"JavaII", "Java para Intermediario", 400.00);
+		
+		curso1.setCategorias(Arrays.asList(categoria1,categoria2));
+		curso2.setCategorias(Arrays.asList(categoria1));
+		
+		cursoRepositorio.saveAll(Arrays.asList(curso1,curso2));
 		
 		Usuario usuario1 = new Usuario();
 		usuario1.setNome("james");

@@ -38,10 +38,7 @@ public class Endereco implements Serializable{
 	 @JoinColumn(name="usuario_id")
 	 private Usuario usuario;
 	 
-	 @ManyToOne
-	 @JoinColumn(name="curso_id")
-	 private Curso curso;
-	 
+	
 
 	public Usuario getUsuario() {
 		return usuario;
